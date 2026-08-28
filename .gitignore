@@ -47,3 +47,5 @@ yarn-error.log*
 password
 
 db/*-old.json
+
+2026updates/*
