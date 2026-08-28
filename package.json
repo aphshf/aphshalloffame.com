@@ -8,9 +8,8 @@
     "start": "next start",
     "build": "next build",
     "prettier": "prettier --write .",
-    "lint": "next lint && yarn prettier",
-    "prod": "yarn lint && yarn build",
-    "postinstall": "prisma generate",
+    "lint": "next lint && pnpm prettier",
+    "prod": "pnpm lint && pnpm build",
     "bio-updater": "node ./.scripts/bio-updater.js",
     "dump": "node ./.scripts/migrations/SQL/dumps/index.js",
     "seed": "node ./.scripts/migrations/seed"
@@ -34,7 +33,6 @@
     "@emotion/react": "^11.11.1",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
-    "@prisma/client": "^5.4.2",
     "@tanstack/react-query": "^5.0.0",
     "classnames": "^2.3.2",
     "cloudinary": "2.0.3",
@@ -57,7 +55,6 @@
     "eslint-config-next": "^14.1.4",
     "eslint-config-prettier": "^9.0.0",
     "postcss": "^8.4.31",
-    "prisma": "^5.4.2",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2"
   }
