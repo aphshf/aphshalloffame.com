@@ -6,19 +6,20 @@
       {
         "id": "print-reservation",
         "btnLabel": "Print Reservation",
-        "btnUrl": "/docs/2024CeremonyInvitation.pdf",
-        "formUrl": "https://docs.google.com/document/d/e/2PACX-1vSlHf9yAtUvr_UkIphHAnnspRtjRzTf3jLaIeljLCQVGOZsv5tEMWlswaJpT1V6SA/pub?embedded=true",
-        "formTitle": "Reservation - Asbury Park High School Distinguishe Alumni Hall of Fame Induction Ceremony 2024",
+        "btnUrl": "/docs/2026CeremonyInvitation.pdf",
+        "formUrl": "/docs/2026CeremonyInvitation.pdf",
+        "formTitle": "Reservation - Asbury Park High School Distinguishe Alumni Hall of Fame Induction Ceremony 2026",
         "formId": "invitation-2026"
       },
       {
         "id": "print-advertise-form",
         "btnLabel": "Print Advertise Form",
-        "btnUrl": "/docs/2024AdvertiseCeremony.pdf",
-        "formUrl": "https://docs.google.com/document/d/e/2PACX-1vTNfwzr7_b4huylSkAK5X1XeC_Bdx9Hg4G--a45-2ozCySkrefYSbykxEayApQj_g/pub?embedded=true",
-        "formTitle": "Advertise - Asbury Park High School Distinguished Alumni Hall of Fame Induction Ceremony 2020",
+        "btnUrl": "/docs/2026AdvertiseCeremony.pdf",
+        "formUrl": "https://docs.google.com/document/d/e/2PACX-1vQkGBHgokLykrBqxzObriKNkOgO_4SBtZFPLcfKRLtNkMRnPDWbJrff5WEVFQYcIw/pub?embedded=true",
+        "formTitle": "Advertise - Asbury Park High School Distinguished Alumni Hall of Fame Induction Ceremony 2026",
         "formId": "advertise-2024"
       }
     ]
   }
 ]
+
