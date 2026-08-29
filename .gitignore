@@ -49,3 +49,4 @@ password
 db/*-old.json
 
 2026updates/*
+.env*

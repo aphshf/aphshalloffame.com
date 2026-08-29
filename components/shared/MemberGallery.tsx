@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import years from 'db/years.json'
 import members_db from 'db/members.json'
 
-const DEFAULT_YEAR = '2024'
+const DEFAULT_YEAR = '2026'
 
 const LoadingPlaceholder = () => <div style={{ height: 250 }} />
 
@@ -17,7 +17,7 @@ const MemberGallery = () => {
 
   function getMembers(year: string) {
     const memberByYear = members_db.filter((m) => m.inducted === year)
-    console.log(memberByYear)
+
     if (memberByYear.length > 0) {
       setMembers(memberByYear)
     }
@@ -69,32 +69,32 @@ const MemberGallery = () => {
           <>
             {members
               .sort((a, b) => (a.lastName > b.lastName ? 1 : -1))
-              .map((member) => {
+              .map(({ slug, name, inducted}) => {
                 const imgBaseUrl = genCloudinaryUrl(
                   '/c_scale,h_191/',
                   'site/Members/',
                 )
 
-                const imgExtension = `${member?.slug}.webp`
+                const imgUrl = `url(${imgBaseUrl}${slug}.webp)`
 
                 return (
                   <Link
-                    key={member?.name}
-                    href={encodeURI(`/inductee/${member?.slug}`)}
+                    key={name}
+                    href={encodeURI(`/inductee/${slug}`)}
                   >
                     <div
                       className="h-48 w-36 bg-cover bg-center cursor-pointer"
                       style={{
-                        backgroundImage: `url(${imgBaseUrl}${imgExtension})`,
+                        backgroundImage: imgUrl,
                       }}
                     >
                       <div className="bg-black bg-opacity-0 w-full h-full hover:bg-opacity-40 transition-all duration-1000">
                         <div className="opacity-0 hover:opacity-100 duration-1000 flex flex-col w-full h-full m-0 p-0 justify-center items-center text-center">
                           <span className="text-center text-white text-sm">
-                            {member?.name}
+                            {name}
                           </span>
                           <span className="text-center text-white text-sm">
-                            Inducted: {member?.inducted}
+                            Inducted: {inducted}
                           </span>
                         </div>
                       </div>
