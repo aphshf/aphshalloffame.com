@@ -13,10 +13,7 @@
     "build": "next build",
     "prettier": "prettier --write .",
     "lint": "next lint && pnpm prettier",
-    "prod": "pnpm lint && pnpm build",
-    "bio-updater": "node ./.scripts/bio-updater.js",
-    "dump": "node ./.scripts/migrations/SQL/dumps/index.js",
-    "seed": "node ./.scripts/migrations/seed"
+    "prod": "pnpm lint && pnpm build"
   },
   "repository": {
     "type": "git",
@@ -24,8 +21,8 @@
   },
   "keywords": [
     "next.js",
-    "mongodb",
-    "react"
+    "react",
+    "tailwindcss"
   ],
   "author": "tumultywebservices,llc",
   "license": "ISC",
@@ -36,7 +33,6 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
-    "@tanstack/react-query": "^5.0.0",
     "classnames": "^2.3.2",
     "cloudinary": "2.0.3",
     "dotenv": "^16.3.1",
@@ -48,6 +44,7 @@
     "react-dom": "^18.2.0",
     "react-slick": "^0.29.0",
     "sharp": "^0.32.6",
+    "slick-carousel": "1.8.1",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {

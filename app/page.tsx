@@ -1,7 +1,8 @@
+import Image from 'next/image'
 import SubLinks from 'components/shared/SubLinks'
 import home from 'db/home.json'
 import { Metadata } from 'next'
-import MemberGalleryQueryProvider from 'components/shared/MemberGalleryQueryProvider'
+import MemberGallerySection from 'components/shared/MemberGallerySection'
 import { getPageSEO } from 'utils/helpers'
 import { SITE_TITLE } from 'utils/constants'
 
@@ -19,10 +20,19 @@ const Home = () => {
     <>
       <SubLinks />
       <div
-        className="bg-no-repeat bg-center bg-cover bg-welcome-banner z-30 flex justify-center items-center border-t-4 border-black"
+        className="relative flex justify-center items-center border-t-4 border-black"
         style={{ height: 526 }}
       >
-        <div className="bg-black bg-opacity-40 w-full">
+        {/* A real <img> with priority so the browser finds and preloads the LCP image early */}
+        <Image
+          src="/images/homepage-banner.webp"
+          alt=""
+          fill
+          priority
+          sizes="(min-width: 1280px) 1216px, 100vw"
+          className="object-cover object-center"
+        />
+        <div className="relative bg-black bg-opacity-40 w-full">
           <p
             style={{ textShadow: '2px 3px 4px #000' }}
             className="text-white text-3xl sm:text-7xl font-bold text-center p-6"
@@ -36,7 +46,7 @@ const Home = () => {
           className="py-4 px-7 text-center content"
           dangerouslySetInnerHTML={{ __html: home?.latest }}
         />
-        <MemberGalleryQueryProvider />
+        <MemberGallerySection />
       </div>
     </>
   )

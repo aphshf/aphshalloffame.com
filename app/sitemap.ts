@@ -23,12 +23,15 @@ export async function generateInducteeLinks() {
 }
 
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
-  const siteLinks = [...navigation].map((link) => ({
-    url: `${SITE_URL}${link?.url}`,
-    lastModified: new Date(),
-    changeFrequency: 'yearly',
-    priority: 0.5,
-  }))
+  // Menu items with children (Ceremonies) are dropdowns, not pages
+  const siteLinks = navigation
+    .filter((link) => !link.children)
+    .map((link) => ({
+      url: `${SITE_URL}${link?.url}`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.5,
+    }))
 
   const ceremonyLinks = await generateCeremonyLinks()
   const inducteeLinks = await generateInducteeLinks()

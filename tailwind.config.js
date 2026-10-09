@@ -2,10 +2,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       fontFamily: {
@@ -17,9 +14,6 @@ module.exports = {
           darkBlue: '#386982',
           lightBlue: '#59a7cf',
         },
-      },
-      backgroundImage: {
-        'welcome-banner': "url('/images/homepage-banner.webp')",
       },
     },
   },

@@ -16,7 +16,7 @@ const ContactForm = dynamic(() => import('components/ContactForm'))
 type Contact = (typeof contacts)[0]
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getPageSEO('/')
+  const page = await getPageSEO('/contact')
 
   return {
     title: page?.title,

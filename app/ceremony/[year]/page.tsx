@@ -22,11 +22,11 @@ const getPhotos = async (year) => {
   /** Serialize the response */
   const photos = request
     .filter(({ public_id }) => public_id.includes(year))
-    .map(({ public_id, height, width, secure_url }) => ({
-      altText: public_id,
+    .map(({ height, width, secure_url }) => ({
       height,
       width,
-      src: secure_url,
+      // Let Cloudinary pick the format (WebP/AVIF) and compression level
+      src: secure_url.replace('/image/upload/', '/image/upload/f_auto,q_auto/'),
     }))
     .sort((a, b) => {
       if (b.height < b.width) {
@@ -34,6 +34,10 @@ const getPhotos = async (year) => {
       }
       return -1
     })
+    .map((photo, index) => ({
+      ...photo,
+      altText: `${year} induction ceremony, photo ${index + 1}`,
+    }))
 
   return photos
 }
