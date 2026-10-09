@@ -4,6 +4,8 @@ Source code for [https://aphshalloffame.com/](https://aphshalloffame.com/).
 
 This README is aimed at whoever is managing the site day to day — how to run it, how to change content, and how it gets deployed.
 
+For how the site compares with the pre-2020 original, see [BASELINE.md](BASELINE.md) (the old site, measured) and [RESULTS.md](RESULTS.md) (before/after metrics and the improvement backlog).
+
 ## Tech stack
 
 - **Framework:** Next.js 14 (App Router), React 18, TypeScript
@@ -90,7 +92,6 @@ pnpm build            # production build
 pnpm start            # run a production build locally
 pnpm lint             # next lint + prettier
 pnpm prod             # lint + build (run before merging anything non-trivial)
-pnpm bio-updater      # runs .scripts/bio-updater.js, if present
 ```
 
 ## Deployment

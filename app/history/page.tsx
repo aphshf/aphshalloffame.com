@@ -2,7 +2,7 @@ import SubLinks from 'components/shared/SubLinks'
 import SectionTitle from 'components/shared/SectionTitle'
 import home from 'db/home.json'
 import { Metadata } from 'next'
-import MemberGalleryQueryProvider from 'components/shared/MemberGalleryQueryProvider'
+import MemberGallerySection from 'components/shared/MemberGallerySection'
 import { getPageSEO } from 'utils/helpers'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -23,7 +23,7 @@ const History = () => (
         className="py-6 px-7 text-center content"
         dangerouslySetInnerHTML={{ __html: home?.history }}
       />
-      <MemberGalleryQueryProvider />
+      <MemberGallerySection />
     </div>
   </>
 )

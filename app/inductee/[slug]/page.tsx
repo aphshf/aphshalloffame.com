@@ -17,7 +17,7 @@ async function getMember(slug) {
       .then((res) => res.resources)
 
     let profileImage = {
-      src: request[0]?.url.replace('png', 'webp').replace('jpg', 'webp'),
+      src: request[0]?.secure_url.replace('png', 'webp').replace('jpg', 'webp'),
       width: request[0]?.width,
       height: request[0]?.height,
       alt: request[0]?.filename,
@@ -63,7 +63,6 @@ const Inductee = async ({ params: { slug } }) => {
                   width={width}
                   height={height}
                   priority
-                  layout="fixed"
                 />
               </div>
             )}

@@ -6,7 +6,7 @@ import { getPageSEO } from 'utils/helpers'
 import { DONATE_TITLE, DONATE_SUB_TITLE } from 'utils/constants'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getPageSEO('/')
+  const page = await getPageSEO('/donate')
 
   return {
     title: page?.title,

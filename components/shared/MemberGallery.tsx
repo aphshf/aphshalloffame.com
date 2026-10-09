@@ -1,31 +1,36 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import SectionTitle from './SectionTitle'
 import { genCloudinaryUrl } from '../../utils/constants'
 import classNames from 'classnames'
 import years from 'db/years.json'
-import members_db from 'db/members.json'
 
 const DEFAULT_YEAR = '2026'
 
 const LoadingPlaceholder = () => <div style={{ height: 250 }} />
 
-const MemberGallery = () => {
+export type GalleryMember = {
+  slug: string
+  name: string
+  lastName: string
+  inducted: string
+}
+
+const MemberGallery = ({ allMembers }: { allMembers: GalleryMember[] }) => {
   const [currentYear, setCurrentYear] = useState(DEFAULT_YEAR)
-  const [members, setMembers] = useState(members_db)
+  // Start with the default year so the first render doesn't request every portrait
+  const [members, setMembers] = useState(() =>
+    allMembers.filter((m) => m.inducted === DEFAULT_YEAR),
+  )
 
   function getMembers(year: string) {
-    const memberByYear = members_db.filter((m) => m.inducted === year)
+    const memberByYear = allMembers.filter((m) => m.inducted === year)
 
     if (memberByYear.length > 0) {
       setMembers(memberByYear)
     }
   }
-
-  useEffect(() => {
-    getMembers(DEFAULT_YEAR)
-  }, [])
 
   return (
     <div className="w-full">
@@ -69,7 +74,7 @@ const MemberGallery = () => {
           <>
             {members
               .sort((a, b) => (a.lastName > b.lastName ? 1 : -1))
-              .map(({ slug, name, inducted}) => {
+              .map(({ slug, name, inducted }) => {
                 const imgBaseUrl = genCloudinaryUrl(
                   '/c_scale,h_191/',
                   'site/Members/',
@@ -78,10 +83,7 @@ const MemberGallery = () => {
                 const imgUrl = `url(${imgBaseUrl}${slug}.webp)`
 
                 return (
-                  <Link
-                    key={name}
-                    href={encodeURI(`/inductee/${slug}`)}
-                  >
+                  <Link key={name} href={encodeURI(`/inductee/${slug}`)}>
                     <div
                       className="h-48 w-36 bg-cover bg-center cursor-pointer"
                       style={{

@@ -1,7 +1,7 @@
 [
   {
     "title": "APHS Distinguished Alumni Hall of Fame Induction Ceremony 2026",
-    "details": "The Ceremony dinner will be Thursday, October 17, 2026",
+    "details": "The Ceremony dinner will be Thursday, October 15, 2026",
     "forms": [
       {
         "id": "print-reservation",
@@ -15,11 +15,10 @@
         "id": "print-advertise-form",
         "btnLabel": "Print Advertise Form",
         "btnUrl": "/docs/2026AdvertiseCeremony.pdf",
-        "formUrl": "https://docs.google.com/document/d/e/2PACX-1vQkGBHgokLykrBqxzObriKNkOgO_4SBtZFPLcfKRLtNkMRnPDWbJrff5WEVFQYcIw/pub?embedded=true",
+        "formUrl": "/docs/2026AdvertiseCeremony.pdf",
         "formTitle": "Advertise - Asbury Park High School Distinguished Alumni Hall of Fame Induction Ceremony 2026",
         "formId": "advertise-2026"
       }
     ]
   }
 ]
-
