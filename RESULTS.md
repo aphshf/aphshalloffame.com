@@ -1,6 +1,6 @@
 # Results: aphshalloffame.com (after migration)
 
-Measured: 2026-10-09, against `main` at `e004699` and the live site at `https://www.aphshalloffame.com/`
+Measured: 2026-10-09, against `main` at `e004699` and the live site at `https://www.aphshalloffame.com/`. Re-measured on the live site the same day after the quick-win fixes were deployed (`4efc2c8`, PR #12). See [Quick-win fixes](#quick-win-fixes).
 Baseline for comparison: [BASELINE.md](BASELINE.md)
 
 ## Before and after
@@ -17,8 +17,8 @@ Baseline for comparison: [BASELINE.md](BASELINE.md)
 | Images with alt text | 0 of 6 sampled | Profile photos use the inductee's name. Homepage grid links read out each name. Ceremony photos use file names (see backlog) |
 | Lighthouse Accessibility | 53 | 96 |
 | Lighthouse SEO | 82 | 100 |
-| Lighthouse Best Practices | 82 (overstated, see baseline) | 89 to 96 |
-| Lighthouse Performance | 94 to 99 | 76 to 94 (see below) |
+| Lighthouse Best Practices | 82 (overstated, see baseline) | 96 to 100 (89 to 96 before the quick wins) |
+| Lighthouse Performance | 94 to 99 | 83 to 94 (76 to 94 before the quick wins, see below) |
 | Files edited to add an inductee | Up to 107 (the sidebar is copied into every page) | 1 data file (`db/members.json`). Profile, directory, homepage grid and sitemap are generated from it |
 | Sidebar copies in sync | No: 88, 76 and 63 names on different pages | Single source, so always in sync |
 | Ceremony photos | One page load per photo | One gallery page per year with a slider, grid and lightbox |
@@ -28,6 +28,8 @@ Baseline for comparison: [BASELINE.md](BASELINE.md)
 The class of 2026 (10 inductees, the event page, the invitation and ad PDFs, and the menu) went live in one commit, `26c0d72`, which changed 11 files.
 
 ## Lighthouse
+
+This section is the first measurement, at `e004699`, before the quick-win fixes. For the numbers after the fixes, see [Live site after deploying](#live-site-after-deploying).
 
 Same setup as the baseline: Lighthouse 12.6.1, Chrome 154, mobile preset with simulated throttling, Incognito, 3 runs per page, median reported. The same three pages as the baseline, measured on the live site (Vercel) and on a local production build (`pnpm build && pnpm start`) for a like-for-like comparison with the baseline's local copy.
 
@@ -117,7 +119,7 @@ The old site had no dependencies to audit. It also ran unpatched Apache over pla
 
 ## Quick-win fixes
 
-Applied and measured 2026-10-09, on top of `e004699`. Not yet deployed.
+Applied and measured 2026-10-09, on top of `e004699`. Deployed the same day: commit `9053992`, merged to `main` in PR #12 (`4efc2c8`).
 
 ### Lighthouse, before and after the fixes
 
@@ -164,6 +166,29 @@ Combined with the baseline:
 
 After the fixes, the browser console is empty on Home, Inductee, both ceremony pages checked, Events, Donate and Contact.
 
+### Live site after deploying
+
+Re-measured on `https://www.aphshalloffame.com/` after the merge, with the same settings (mobile, 3 runs, median) and the same three pages. "Before" is the first live measurement at `e004699`.
+
+| Page | Performance | Best Practices | LCP | Transfer | Requests |
+| --- | --- | --- | --- | --- | --- |
+| Home | 84 → **92** | 96 → **100** | 4.5 s → **3.4 s** | 1,300 → **540 KiB** | 165 → **33** |
+| Inductee | 94 → 94 | 96 → **100** | 3.1 s → 3.1 s | 436 → 433 KiB | 19 → 19 |
+| Ceremony (2010) | 76 → **83** | 89 → **96** | 7.7 s → **4.8 s** | 2,977 → **1,292 KiB** | 59 → **45** |
+
+Accessibility stayed at 96 and SEO at 100 on all three. TBT and CLS stayed at 0. Individual Performance runs: Home 85, 92, 92; Inductee 94, 94, 94; Ceremony 83, 78, 85.
+
+The live numbers are a little better than the local ones, as they were before the fixes. Vercel's CDN serves the pages and the banner image closer and with better compression than `pnpm start` on a laptop.
+
+Against the old site, the homepage has gone from 15 points behind on Performance (99 → 84) to 7 points behind (99 → 92), while showing 10 portraits and a full-width photo the old page didn't have. The ceremony page loads the whole 19-photo gallery in 1,292 KiB. On the old site that would buy about seven photos: 366 KiB for the first page load and about 155 KiB for each one after.
+
+Remaining failed audits on the live site:
+
+- Accessibility: `color-contrast` (light-blue subheading and year buttons). All three pages. This is the only Accessibility failure left.
+- Best Practices, ceremony page only: `image-aspect-ratio`. On a phone the slider is 292px wide, but each photo is forced to 600px tall, so landscape photos are squashed to about a third of their real width. This was already failing at `e004699`, where the slider also fixed the height at 600px. See the backlog.
+- Performance diagnostic, ceremony page only: `font-display` still flags some web fonts.
+- The console errors, the hydration errors, `unsized-images` and `image-size-responsive` from the first measurement no longer fail.
+
 ### Tried and reverted
 
 - `lazyLoad: 'ondemand'` on the ceremony slider. It cut transfer to 957 KiB but caused a large layout shift (CLS 0.39) and a later LCP, and Performance fell to 59. Reverted.
@@ -181,13 +206,10 @@ After the fixes, the browser console is empty on Home, Inductee, both ceremony p
 
 **Performance**
 
-- Homepage LCP (3.9 s) is now mostly render delay (2.4 s), waiting on stylesheets and about 280 KiB of web fonts. Load fewer font weights: `app/font.ts` requests six Open Sans weights plus italics.
-- Ceremony LCP (5.5 s) is the 1200px-tall first slide. Smaller responsive sizes need the slider's fixed 600px height to change first.
+- Homepage LCP (3.4 s live, 3.9 s local) is now mostly render delay (2.4 s), waiting on stylesheets and about 280 KiB of web fonts. Load fewer font weights: `app/font.ts` requests six Open Sans weights plus italics.
+- Ceremony slider distorts photos on phones: the fixed 600px height plus the narrow slide squashes them (`image-aspect-ratio`). Cap the height instead of fixing it (for example `max-height: 600px; height: auto; max-width: 100%`) and re-check CLS, since the slides currently rely on the fixed height.
+- Ceremony LCP (4.8 s live, 5.5 s local) is the 1200px-tall first slide. Smaller responsive sizes need the slider's fixed 600px height to change first.
 
 **Accessibility**
 
 - Raise the contrast of the light-blue subheading and the active year button (`site.lightBlue`, `#59a7cf`). The fix means darkening the brand color, so it's a design decision. This is the only remaining Accessibility failure.
-
-**Process**
-
-- Re-run Lighthouse against the live site after deploying, to confirm the local numbers.
